@@ -31,9 +31,9 @@ namespace OnboardingTest2.Pages
 
             Thread.Sleep(5000);
             // Assert if the account has been sign in
-            Wait.WaitToBeVisible(driver, "XPath", "//div[contains(text(), \"Tuna Li\")]", 5);
-            IWebElement actualAccountName = driver.FindElement(By.XPath("//div[contains(text(), \"Tuna Li\")]"));
-            Assert.That(actualAccountName.Text == "Tuna Li", "Actual name and expected name do not match!");
+            Wait.WaitToBeVisible(driver, "XPath", "//div[contains(text(), \"Eddie He\")]", 5);
+            IWebElement actualAccountName = driver.FindElement(By.XPath("//div[contains(text(), \"Eddie He\")]"));
+            Assert.That(actualAccountName.Text == "Eddie He", "Actual name and expected name do not match!");
         }
     }
 }

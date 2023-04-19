@@ -13,35 +13,28 @@ namespace OnboardingTest2.Test
     [Parallelizable]
     public class Actions_Test : CommonDriver
     {
-        Profile profileObj = new Profile();
         ShareSkill shareSkillObj = new ShareSkill();
         ManageListings mLObj = new ManageListings();
 
         [Test, Order(1)]
-        public void Profile()
-        {
-            profileObj.ProfileActions(driver);
-        }
-
-        [Test, Order(2)]
         public void ShareSkillForm()
         {
             shareSkillObj.ShareSkillAction(driver);
         }
 
-        [Test, Order(3)]
+        [Test, Order(2)]
         public void ViewAction()
         {
           mLObj.ViewListings(driver);
         }
 
-        [Test, Order(4)]
+        [Test, Order(3)]
         public void EditAction()
         {
           mLObj.EditListing(driver);
         }
 
-        [Test, Order(5)]
+        [Test, Order(4)]
         public void DeleteAction()
         {
           mLObj.DeleteListing(driver);

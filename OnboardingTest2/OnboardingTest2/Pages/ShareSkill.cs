@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AutoItX3Lib;
 
 namespace OnboardingTest2.Pages
 {
@@ -48,6 +49,18 @@ namespace OnboardingTest2.Pages
             IWebElement skillExchangeTag = driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[8]/div[4]/div/div/div/div/div/input"));
             skillExchangeTag.SendKeys("Photo Skill");
             skillExchangeTag.SendKeys(Keys.Enter);
+
+            // Identify the Work Samples and click the plus button to upload photo
+            IWebElement workSamples = driver.FindElement(By.XPath("//*[@id=\"service-listing-section\"]/div[2]/div/form/div[9]/div/div[2]/section/div/label/div/span/i"));
+            workSamples.Click();
+
+            AutoItX3 autoIt = new AutoItX3();
+            autoIt.WinActivate("Open");
+
+            autoIt.Send("C:\\Users\\EddieHe\\Desktop\\123.jpg");
+            Thread.Sleep(1000);
+            autoIt.Send("{ENTER}");
+
 
             // Identify the Save button and click on it
             IWebElement saveButton = driver.FindElement(By.XPath("//input[@class=\"ui teal button\"]"));
