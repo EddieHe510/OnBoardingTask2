@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AutoItX3Lib;
+using ReportUtils.Reports;
 
 namespace OnboardingTest2.Pages
 {
@@ -13,11 +14,14 @@ namespace OnboardingTest2.Pages
     {
         public void ShareSkillAction(IWebDriver driver)
         {
+            ExtentReporting.LogInfo($"Write share skill form");
+
             // Identify the Share Skill button and click on it
             Wait.WaitToBeClickable(driver, "XPath", "//a[@class=\"ui basic green button\"]", 5);
             IWebElement shareSkillButton = driver.FindElement(By.XPath("//a[@class=\"ui basic green button\"]"));
             shareSkillButton.Click();
 
+            Wait.WaitToBeVisible(driver, "Name", "title", 5);
             // Identify the Title textbox and enter vaild title
             IWebElement titleTextBox = driver.FindElement(By.Name("title"));
             titleTextBox.SendKeys("Jazz Club");
@@ -56,7 +60,7 @@ namespace OnboardingTest2.Pages
 
             AutoItX3 autoIt = new AutoItX3();
             autoIt.WinActivate("Open");
-
+            Thread.Sleep(2000);
             autoIt.Send("C:\\Users\\EddieHe\\Desktop\\123.jpg");
             Thread.Sleep(1000);
             autoIt.Send("{ENTER}");

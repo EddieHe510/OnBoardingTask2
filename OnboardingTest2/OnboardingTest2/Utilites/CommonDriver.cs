@@ -1,35 +1,64 @@
-﻿using NUnit.Framework;
+﻿using AventStack.ExtentReports;
+using AventStack.ExtentReports.Reporter;
+using CompetitionTask.Utilites;
+using MongoDB.Bson.Serialization.Conventions;
+using NUnit.Framework;
+using NUnit.Framework.Interfaces;
 using OnboardingTest2.Pages;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using OpenQA.Selenium.DevTools.V110.Debugger;
+using ReportUtils.Reports;
+using System.Reflection;
+using System.Security.Policy;
 
 namespace OnboardingTest2.Utilites
 {
+    [TestFixture]
     public class CommonDriver
     {
-        public static WebDriver driver;
+        public WebDriver driver;
+        protected Broswer Broswer;
 
         [SetUp]
-        public void LoginSteps()
+        public void OpenBrowser()
         {
+            ExtentReporting.CreateTest(TestContext.CurrentContext.Test.MethodName);
+
             driver = new ChromeDriver();
             driver.Manage().Window.Maximize();
             driver.Navigate().GoToUrl("http://localhost:5000/Home");
-
-            // Login action
-            SignIn signIn = new SignIn();
-            signIn.SignInActions(driver);
+              
+            Broswer = new Broswer(driver);
         }
 
+
         [TearDown]
-        public void CloseBrowsers()
+        public void CloseBrowser()
         {
-            driver.Quit();
+            EndTest();
+            ExtentReporting.EndReporting();
+            driver.Quit();          
+        }                 
+        
+        private void EndTest()
+        {
+            var testStatus = TestContext.CurrentContext.Result.Outcome.Status;
+            var message = TestContext.CurrentContext.Result.Message;
+
+            switch(testStatus)
+            {
+                case TestStatus.Failed:
+                    ExtentReporting.LogFail($"Test has failed {message}");
+                    break;
+                case TestStatus.Skipped:
+                    ExtentReporting.LogInfo($"Test skipped {message}");
+                    break;
+                default:
+                    break;
+            }
+
+            ExtentReporting.LogScreenShot("Ending test", Broswer.GetScreenShot());
         }
     }
 }

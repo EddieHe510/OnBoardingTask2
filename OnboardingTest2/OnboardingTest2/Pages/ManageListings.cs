@@ -1,6 +1,7 @@
 ﻿using NUnit.Framework;
 using OnboardingTest2.Utilites;
 using OpenQA.Selenium;
+using ReportUtils.Reports;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ namespace OnboardingTest2.Pages
     {
         public void ViewListings(IWebDriver driver)
         {
+            ExtentReporting.LogInfo($"View Listing");
             Wait.WaitToBeClickable(driver, "XPath", "//*[@id=\"account-profile-section\"]/div/section[1]/div/a[3]", 5);
             // Click on Manage Listings Link
             IWebElement manageListingsLink = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[1]/div/a[3]"));
@@ -26,6 +28,7 @@ namespace OnboardingTest2.Pages
         }
         public void EditListing(IWebDriver driver)
         {
+            ExtentReporting.LogInfo($"Edit Listing");
             Wait.WaitToBeClickable(driver, "XPath", "//*[@id=\"account-profile-section\"]/div/section[1]/div/a[3]", 5);
             // Click on Manage Listings Link
             IWebElement manageListingsLink = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[1]/div/a[3]"));
@@ -57,6 +60,7 @@ namespace OnboardingTest2.Pages
 
         public void DeleteListing(IWebDriver driver)
         {
+            ExtentReporting.LogInfo($"Delete Listing");
             Wait.WaitToBeClickable(driver, "XPath", "//*[@id=\"account-profile-section\"]/div/section[1]/div/a[3]", 5);
             // Click on Manage Listings Link
             IWebElement manageListingsLink = driver.FindElement(By.XPath("//*[@id=\"account-profile-section\"]/div/section[1]/div/a[3]"));

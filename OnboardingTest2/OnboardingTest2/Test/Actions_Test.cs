@@ -6,6 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AventStack.ExtentReports;
+using AventStack.ExtentReports.Reporter;
+using ReportUtils.Reports;
+using System.Net.Mail;
+using CompetitionTask.Utilites;
 
 namespace OnboardingTest2.Test
 {
@@ -17,28 +22,40 @@ namespace OnboardingTest2.Test
         ManageListings mLObj = new ManageListings();
 
         [Test, Order(1)]
-        public void ShareSkillForm()
+        public void SignIn()
         {
+            ExcelLib.PopulateInCollection(@"G:\OnboardingTest2\OnBoardingTask2\OnboardingTest2\OnboardingTest2\ExcelData\TestData.xlsx", "SignIn");
+            SignIn signIn = new SignIn();
+            signIn.SignInActions(driver, ExcelLib.ReadData(1, "Username"), ExcelLib.ReadData(1, "Password"));
+        }
+
+
+        [Test, Order(2)]
+        public void ShareSkillForm()
+        {           
+            ExtentReporting.LogInfo("Share Skills Action");
             shareSkillObj.ShareSkillAction(driver);
         }
 
-        [Test, Order(2)]
+        [Test, Order(3)]
         public void ViewAction()
         {
-          mLObj.ViewListings(driver);
-        }
-
-        [Test, Order(3)]
-        public void EditAction()
-        {
-          mLObj.EditListing(driver);
+            ExtentReporting.LogInfo("View listings Action");
+            mLObj.ViewListings(driver);
         }
 
         [Test, Order(4)]
+        public void EditAction()
+        {
+            ExtentReporting.LogInfo("Edit Listing Action");
+            mLObj.EditListing(driver);
+        }
+
+        [Test, Order(5)]
         public void DeleteAction()
         {
-          mLObj.DeleteListing(driver);
+            ExtentReporting.LogInfo("Delete Listing Action");
+            mLObj.DeleteListing(driver);
         }
-        
     }
 }
