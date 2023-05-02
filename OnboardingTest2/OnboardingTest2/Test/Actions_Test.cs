@@ -24,7 +24,7 @@ namespace OnboardingTest2.Test
         [Test, Order(1)]
         public void SignIn()
         {
-            ExcelLib.PopulateInCollection(@"G:\CompetitionTaskData\TestData.xlsx", "Login");
+            ExcelLib.PopulateInCollection(@"G:\OnboardingTest2\OnBoardingTask2\OnboardingTest2\OnboardingTest2\ExcelData\TestData.xlsx", "Login");
             SignIn signIn = new SignIn();
             signIn.SignInActions();
         }

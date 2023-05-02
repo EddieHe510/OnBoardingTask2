@@ -28,7 +28,6 @@ namespace CompetitionTask.Utilites
             try
             {
                 // Retriving Data using LINQ to reduce much of iterations
-                rowNumber = rowNumber - 1;
                 string data = (from colData in dataCol
                                where colData.colValue == columnName && colData.rowNumber == rowNumber
                                select colData.colValue).First().ToString();
