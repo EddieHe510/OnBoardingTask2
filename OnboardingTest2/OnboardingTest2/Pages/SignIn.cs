@@ -1,4 +1,5 @@
 ﻿using AventStack.ExtentReports;
+using CompetitionTask.Utilites;
 using NUnit.Framework;
 using OnboardingTest2.Utilites;
 using OpenQA.Selenium;
@@ -14,7 +15,7 @@ using System.Threading.Tasks;
 namespace OnboardingTest2.Pages
 {
     public class SignIn : CommonDriver
-    {
+    {       
         private IWebElement signInbutton => driver.FindElement(By.XPath("//*[@id=\"home\"]/div/div/div[1]/div/a"));
         private IWebElement emailTextBox => driver.FindElement(By.XPath("//input[@name=\"email\"]"));
         private IWebElement passwordTextBox => driver.FindElement(By.XPath("//input[@name=\"password\"]"));
@@ -22,7 +23,7 @@ namespace OnboardingTest2.Pages
         private IWebElement actualAccountName => driver.FindElement(By.XPath("//div[contains(text(), \"Eddie He\")]"));
 
 
-        public void SignInActions(string emailaddress, string password)
+        public void SignInActions()
         {
             ExtentReporting.LogInfo($"Sign in with vaild credentials!");
 
@@ -30,10 +31,10 @@ namespace OnboardingTest2.Pages
             signInbutton.Click();
 
             // Identify the Email address textbox and enter vaild email address
-            emailTextBox.SendKeys(emailaddress);
+            emailTextBox.SendKeys(ExcelLib.ReadData(1, "Emailaddress"));
 
             // Identify the Password textbox and enter valid password
-            passwordTextBox.SendKeys(password);
+            passwordTextBox.SendKeys(ExcelLib.ReadData(1, "Password"));
 
             // Identify the Login button and click on it
             loginButton.Click();

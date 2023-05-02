@@ -66,7 +66,7 @@ namespace CompetitionTask.Utilites
                 }
             });
             DataTableCollection table = resultSet.Tables;
-            DataTable resultTable = table["SignIn"];
+            DataTable resultTable = table[sheetName];
             return resultTable;
         }
 
