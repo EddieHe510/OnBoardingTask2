@@ -23,19 +23,40 @@ namespace CompetitionTask.Utilites
             public string colValue { get; set; }
         }
 
+        public static string ReadData(int rowNumber, string columnName)
+        {
+            try
+            {
+                // Retriving Data using LINQ to reduce much of iterations
+                rowNumber = rowNumber - 1;
+                string data = (from colData in dataCol
+                               where colData.colValue == columnName && colData.rowNumber == rowNumber
+                               select colData.colValue).First().ToString();
 
+                return data.ToString();
+            }
+            catch (Exception e)
+            {
+                // Exception message
+                // Console.WriteLine("Exception occurred in ExcelLib Class ReadData Method!" + Environment.NewLine + e.ToString());
+                e.Message.ToString();
+                return null;
+            }
+        }
+
+        // Clear the data
         public static void ClearData()
         {
             dataCol.Clear();
         }
 
 
-        private static DataTable ExcelToDataTable(string filename, string SheetName)
+        // Import data from excel to table
+        private static DataTable ExcelToDataTable(string filename, string sheetName)
         {
+            System.Text.Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
             FileStream stream = File.Open(filename, FileMode.Open, FileAccess.Read);
             IExcelDataReader excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
-
-            // excelReader.IsFirstRowAsColumnNames = true * Does not works anymore
 
             DataSet resultSet = excelReader.AsDataSet(new ExcelDataSetConfiguration()
             {
@@ -49,27 +70,12 @@ namespace CompetitionTask.Utilites
             return resultTable;
         }
 
-        public static string ReadData(int rowNumber, string columnName)
-        {
-            try
-            {
-                string data = (from colData in dataCol 
-                               where colData.colValue == columnName && colData.rowNumber == rowNumber 
-                               select colData.colValue).SingleOrDefault();
-                return data.ToString();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine("Exception occurred in ExcelLib Class ReadData Method!" + Environment.NewLine + e.ToString());
-                return null;
-            }
-        }
-
         public static void PopulateInCollection(string filename, string SheetName)
         {
             ExcelLib.ClearData();
             DataTable table = ExcelToDataTable(filename, SheetName);
-            // totalRowCount = table.Rows.Count;
+
+            // Iterate through the rows and columns of the table
             for (int row = 1; row <= table.Rows.Count; row++)
             {
                 for (int col = 0; col < table.Columns.Count; col++)

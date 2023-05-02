@@ -17,7 +17,7 @@ namespace OnboardingTest2.Utilites
     [TestFixture]
     public class CommonDriver
     {
-        public WebDriver driver;
+        public static WebDriver driver;
         protected Broswer Broswer;
 
         [SetUp]

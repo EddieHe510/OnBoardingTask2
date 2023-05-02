@@ -13,33 +13,34 @@ using System.Threading.Tasks;
 
 namespace OnboardingTest2.Pages
 {
-    public class SignIn
+    public class SignIn : CommonDriver
     {
-        public void SignInActions(IWebDriver driver, string emailaddress, string password)
+        private IWebElement signInbutton => driver.FindElement(By.XPath("//*[@id=\"home\"]/div/div/div[1]/div/a"));
+        private IWebElement emailTextBox => driver.FindElement(By.XPath("//input[@name=\"email\"]"));
+        private IWebElement passwordTextBox => driver.FindElement(By.XPath("//input[@name=\"password\"]"));
+        private IWebElement loginButton => driver.FindElement(By.XPath("/html/body/div[2]/div/div/div[1]/div/div[4]/button"));
+        private IWebElement actualAccountName => driver.FindElement(By.XPath("//div[contains(text(), \"Eddie He\")]"));
+
+
+        public void SignInActions(string emailaddress, string password)
         {
             ExtentReporting.LogInfo($"Sign in with vaild credentials!");
 
-            Wait.WaitToBeClickable(driver, "XPath", "//*[@id=\"home\"]/div/div/div[1]/div/a", 5);
-            // Identify the Sign In button and click on it
-            IWebElement signInButton = driver.FindElement(By.XPath("//*[@id=\"home\"]/div/div/div[1]/div/a"));
-            signInButton.Click();
+            // Identify the Sign In button and click on it          
+            signInbutton.Click();
 
             // Identify the Email address textbox and enter vaild email address
-            IWebElement emailTextbox = driver.FindElement(By.XPath("//input[@name=\"email\"]"));
-            emailTextbox.SendKeys(emailaddress);
+            emailTextBox.SendKeys(emailaddress);
 
             // Identify the Password textbox and enter valid password
-            IWebElement passwordTextbox = driver.FindElement(By.XPath("//input[@name=\"password\"]"));
-            passwordTextbox.SendKeys(password);
+            passwordTextBox.SendKeys(password);
 
             // Identify the Login button and click on it
-            IWebElement loginButton = driver.FindElement(By.XPath("/html/body/div[2]/div/div/div[1]/div/div[4]/button"));
             loginButton.Click();
 
-            Thread.Sleep(5000);
+            Thread.Sleep(3000);
             // Assert if the account has been sign in
-            Wait.WaitToBeVisible(driver, "XPath", "//div[contains(text(), \"Eddie He\")]", 5);
-            IWebElement actualAccountName = driver.FindElement(By.XPath("//div[contains(text(), \"Eddie He\")]"));
+            Wait.WaitToBeVisible(driver, "XPath", "//div[contains(text(), \"Eddie He\")]", 5);           
             Assert.That(actualAccountName.Text == "Eddie He", "Actual name and expected name do not match!");
         }
     }
