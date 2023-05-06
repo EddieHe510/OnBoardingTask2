@@ -23,7 +23,7 @@ namespace OnboardingTest2.Pages
         private IWebElement actualAccountName => driver.FindElement(By.XPath("//div[contains(text(), \"Eddie He\")]"));
 
 
-        public void SignInActions()
+        public void SignInActions(string emailAddress, string password)
         {
             ExtentReporting.LogInfo($"Sign in with vaild credentials!");
 
@@ -31,10 +31,10 @@ namespace OnboardingTest2.Pages
             signInbutton.Click();
 
             // Identify the Email address textbox and enter vaild email address
-            emailTextBox.SendKeys(ExcelLib.ReadData(1, "Emailaddress"));
+            emailTextBox.SendKeys(emailAddress);
 
             // Identify the Password textbox and enter valid password
-            passwordTextBox.SendKeys(ExcelLib.ReadData(1, "Password"));
+            passwordTextBox.SendKeys(password);
 
             // Identify the Login button and click on it
             loginButton.Click();

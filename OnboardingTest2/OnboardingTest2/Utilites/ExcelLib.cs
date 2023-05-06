@@ -29,16 +29,16 @@ namespace CompetitionTask.Utilites
             {
                 // Retriving Data using LINQ to reduce much of iterations
                 string data = (from colData in dataCol
-                               where colData.colValue == columnName && colData.rowNumber == rowNumber
-                               select colData.colValue).First().ToString();
+                               where colData.colName == columnName && colData.rowNumber == rowNumber
+                               select colData.colValue).SingleOrDefault();
 
                 return data.ToString();
             }
             catch (Exception e)
             {
                 // Exception message
-                // Console.WriteLine("Exception occurred in ExcelLib Class ReadData Method!" + Environment.NewLine + e.ToString());
-                e.Message.ToString();
+                Console.WriteLine("Exception occurred in ExcelLib Class ReadData Method!" + Environment.NewLine + e.ToString());
+                //e.Message.ToString();
                 return null;
             }
         }
@@ -57,38 +57,38 @@ namespace CompetitionTask.Utilites
             FileStream stream = File.Open(filename, FileMode.Open, FileAccess.Read);
             IExcelDataReader excelReader = ExcelReaderFactory.CreateOpenXmlReader(stream);
 
-            DataSet resultSet = excelReader.AsDataSet(new ExcelDataSetConfiguration()
+            DataSet result = excelReader.AsDataSet(new ExcelDataSetConfiguration()
             {
                 ConfigureDataTable = (_) => new ExcelDataTableConfiguration()
                 {
                     UseHeaderRow = true
                 }
             });
-            DataTableCollection table = resultSet.Tables;
+            DataTableCollection table = result.Tables;
             DataTable resultTable = table[sheetName];
             return resultTable;
         }
 
-        public static void PopulateInCollection(string filename, string SheetName)
+        public static void PopulateInCollection(string filename, string sheetName)
         {
-            ExcelLib.ClearData();
-            DataTable table = ExcelToDataTable(filename, SheetName);
+            DataTable table = ExcelToDataTable(filename, sheetName);
 
             // Iterate through the rows and columns of the table
-            for (int row = 1; row <= table.Rows.Count; row++)
+            for (int row = 0; row < table.Rows.Count; row++)
             {
-                for (int col = 0; col < table.Columns.Count; col++)
-                {
-                    Datacollection dtTable = new Datacollection()
-                    {
-                        rowNumber = row,
-                        colName = table.Columns[col].ColumnName,
-                        colValue = table.Rows[row - 1][col].ToString()
-                    };
-
-
-                    dataCol.Add(dtTable);
-                }
+               Datacollection data;
+               for (int col = 0; col < table.Columns.Count; col++)
+               {
+                  data = new Datacollection();
+                  data.rowNumber = row + 1;
+                  data.colName = table.Columns[col].ColumnName;
+                  data.colValue = table.Rows[row][col].ToString();
+                  //rowNumber = row,
+                  //colName = table.Columns[col].ColumnName,
+                  //colValue = table.Rows[row - 1][col].ToString()
+                  dataCol.Add(data);
+               }
+                
             }
         }
     }
