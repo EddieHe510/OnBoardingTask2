@@ -99,7 +99,7 @@ namespace OnboardingTest2.Pages
 
             Wait.WaitToBeClickable(driver, "XPath", "/html/body/div[2]/div/div[3]/button[2]", 5);
             // Click on Yes
-            yesOption.Click();
+            yesOption.Click();      
             Thread.Sleep(3000);
 
             // Check if the listing has been deleted

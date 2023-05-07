@@ -38,7 +38,7 @@ namespace OnboardingTest2.Utilites
         {
             EndTest();
             ExtentReporting.EndReporting();
-            driver.Quit();          
+            driver.Close();         
         }                 
         
         private void EndTest()
